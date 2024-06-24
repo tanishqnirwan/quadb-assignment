@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Pencil, Trash2, Check, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
-import { addTask, deleteTask, editTask, setTasks, toggleTaskCompletion } from '@/lib/redux/todoSlice';
+import { addTask, deleteTask, editTask, toggleTaskCompletion, loadTasksFromLocalStorage } from '@/lib/redux/todoSlice';
 import { toast } from 'react-toastify';
 
 // definition of components used in todo list and TypeScript type declaration
@@ -21,16 +21,8 @@ const TodoList: React.FC = () => {
 
   // to load tasks on component mount
   useEffect(() => {
-    const storedTasks = localStorage.getItem("tasks");
-    if (storedTasks) {
-      dispatch(setTasks(JSON.parse(storedTasks)));
-    }
+    dispatch(loadTasksFromLocalStorage());
   }, [dispatch]);
-
-  // to save into local storage whenever a task changes
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
 
   // to add a new task
   const handleAddTask = () => {
@@ -170,4 +162,3 @@ const TodoList: React.FC = () => {
 };
 
 export default TodoList;
-
