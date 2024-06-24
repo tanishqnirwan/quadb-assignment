@@ -1,84 +1,69 @@
-# QuadB Tech Assignment: Todo List Page
 
-![Todo List Demo](demo.gif)
+# QuadB Tech Assignment: 
+## Todo List App  Next.js, TypeScript, Tailwind CSS, and Shadcn UI
+
+
+Welcome to my QuadB Tech assignment project! This is a Todo List application built using Next.js, TypeScript, Tailwind CSS, and Shadcn UI. It includes functionality to add, edit, delete, and view tasks, with bonuses such as task completion tracking via strikethrough and local storage support.   
+
 
 ## Installation
 
-To install this project, follow these steps:
+To get started with this project, follow these steps:
 
 ```bash
-# Clone the repository
-git clone https://github.com/tanishqnirwan/quadb-assignment.git
+  git clone https://github.com/tanishqnirwan/quadb-assignment.git
 
-# Install dependencies
-npm install
+```
 
-# Run the development server
-npm run dev
+```bash
+  cd quadb-assignment
 
+```
+```bash
+  npm install 
 
----
+```
 
-## Technologies Used
+```bash
+  npm run dev
 
-- **Framework:** Next.js
-- **Styling:** Tailwind CSS
-- **UI Library:** Shadcn UI
-- **State Management:** Redux
-- **Language:** TypeScript
+```
+    
+## Structure
 
----
+The project structure includes:
 
-## Project Structure
+- "lib/": Contains Redux files for state management.
 
-- **lib/**: Redux files for state management.
-- **pages/page.tsx**: Main todo list page.
-- **pages/layout.tsx**: Layout component.
-- **components/ui/**: Shadcn UI components.
+- "pages/": Includes page.tsx for the main application page and layout.tsx for the app layout.
 
----
+- "components/ui/": Houses Shadcn UI components used in the project
+
 
 ## Features
 
-- **Add Task:** Add new tasks to the list.
-- **Edit Task:** Modify existing tasks.
-- **Delete Task:** Remove tasks from the list.
-- **View Task:** See all tasks with optional strike-through for completed tasks.
-- **Local Storage:** Persist tasks locally.
+- **Add**: Easily add new tasks to your list.
+- **Edit**: Modify task details directly.
+- **Delete**: Remove tasks with a simple click.
+- **View**: See all your tasks at a glance.
+- **Bonus Features:**
+  - Task completion tracking with strikethrough effect.
+  - Local storage integration to persist tasks between sessions.
 
----
 
-## How to Use
+## Technologies Used
 
-1. **Adding a Task:**
-- Click the "Add Task" button.
-- Enter your task in the input field and press Enter or click "Add".
 
-2. **Editing a Task:**
-- Double-click on the task text to enter edit mode.
-- Modify the text and press Enter to save.
+- **Next.js**: React framework for server-rendered applications.
+- **TypeScript**: Typed JavaScript for improved code quality.
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+- **Shadcn UI**: UI components library for consistent design elements.
 
-3. **Deleting a Task:**
-- Hover over the task and click the delete icon (trash bin).
 
-4. **Marking a Task as Complete:**
-- Click on the checkbox to toggle completion status.
 
----
+## 🚀 About Me
 
-## Additional Notes
+This project (assignment) is created by **Tanishq Nirwan**
 
-- This project utilizes modern React ecosystem tools like Next.js and TypeScript for enhanced developer experience and type safety.
-- Tailwind CSS is used for rapid styling with minimal custom CSS.
-- Shadcn UI components provide a consistent and accessible user interface.
-
----
-
-## Credits
-
-- Created by [Your Name]
-- Submitted as an assignment for QuadB Tech
-
----
-
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tanishqnirwan/)
 
