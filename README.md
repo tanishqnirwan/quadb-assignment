@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# QuadB Tech Assignment: Todo List Page
 
-## Getting Started
+![Todo List Demo](demo.gif)
 
-First, run the development server:
+## Installation
+
+To install this project, follow these steps:
 
 ```bash
+# Clone the repository
+git clone https://github.com/tanishqnirwan/quadb-assignment.git
+
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Technologies Used
 
-## Learn More
+- **Framework:** Next.js
+- **Styling:** Tailwind CSS
+- **UI Library:** Shadcn UI
+- **State Management:** Redux
+- **Language:** TypeScript
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **lib/**: Redux files for state management.
+- **pages/page.tsx**: Main todo list page.
+- **pages/layout.tsx**: Layout component.
+- **components/ui/**: Shadcn UI components.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Add Task:** Add new tasks to the list.
+- **Edit Task:** Modify existing tasks.
+- **Delete Task:** Remove tasks from the list.
+- **View Task:** See all tasks with optional strike-through for completed tasks.
+- **Local Storage:** Persist tasks locally.
+
+---
+
+## How to Use
+
+1. **Adding a Task:**
+- Click the "Add Task" button.
+- Enter your task in the input field and press Enter or click "Add".
+
+2. **Editing a Task:**
+- Double-click on the task text to enter edit mode.
+- Modify the text and press Enter to save.
+
+3. **Deleting a Task:**
+- Hover over the task and click the delete icon (trash bin).
+
+4. **Marking a Task as Complete:**
+- Click on the checkbox to toggle completion status.
+
+---
+
+## Additional Notes
+
+- This project utilizes modern React ecosystem tools like Next.js and TypeScript for enhanced developer experience and type safety.
+- Tailwind CSS is used for rapid styling with minimal custom CSS.
+- Shadcn UI components provide a consistent and accessible user interface.
+
+---
+
+## Credits
+
+- Created by [Your Name]
+- Submitted as an assignment for QuadB Tech
+
+---
+
+

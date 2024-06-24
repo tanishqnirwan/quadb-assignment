@@ -2,6 +2,8 @@
 "use client"
 
 
+// all the necessary importss
+
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,6 +11,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Pencil, Trash2, Check, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { addTask, deleteTask, editTask, setTasks, toggleTaskCompletion } from '@/lib/redux/todoSlice';
+import { toast } from 'react-toastify';
+
+// defination of components used in todo list and typescript type declaration
 
 const TodoList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +21,8 @@ const TodoList: React.FC = () => {
   const [newTask, setNewTask] = useState<string>("");
   const [editingTask, setEditingTask] = useState<{ id: string | null, text: string }>({ id: null, text: "" });
 
+
+  // to load task on component mount
   useEffect(() => {
     const storedTasks = localStorage.getItem("tasks");
     if (storedTasks) {
@@ -23,9 +30,16 @@ const TodoList: React.FC = () => {
     }
   }, [dispatch]);
 
+
+  // to save into local storage whenever i change the task
+
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+
+
+  // to add new task
 
   const handleAddTask = () => {
     if (newTask.trim() !== "") {
@@ -36,15 +50,20 @@ const TodoList: React.FC = () => {
       };
       dispatch(addTask(newTaskItem));
       setNewTask("");
+      toast.success('Task added successfully');
     }
   };
 
+  // using redux actions of completion , delete , edit -  save and cancel
+
   const handleToggleTaskCompletion = (id: string) => {
     dispatch(toggleTaskCompletion(id));
+    toast.info('Task completion status updated');
   };
 
   const handleDeleteTask = (id: string) => {
     dispatch(deleteTask(id));
+    toast.error('Task deleted');
   };
 
   const startEditing = (id: string, text: string) => {
@@ -55,6 +74,7 @@ const TodoList: React.FC = () => {
     if (editingTask.id !== null) {
       dispatch(editTask({ id: editingTask.id, text: editingTask.text }));
       setEditingTask({ id: null, text: "" });
+      toast.success('Task edited');
     }
   };
 
@@ -63,17 +83,20 @@ const TodoList: React.FC = () => {
   };
 
   return (
+
+    // basic header for the page
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <header className="bg-secondary text-secondary-foreground py-6 px-8">
         <h1 className="text-3xl font-bold">Todo List</h1>
+        <h3 className="text-sm font-semibold">Assignment For QuadB Tech</h3>
       </header>
       <main className="flex-1 p-8 max-w-3xl mx-auto w-full">
         <div className="mb-8 flex items-center">
           <Input
             type="text"
-            placeholder="Add a new task"
+            placeholder="Add a new task - Press Enter To ADD"
             value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
+            onChange={(e) => setNewTask(e.target.value)}    
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleAddTask();
@@ -81,9 +104,9 @@ const TodoList: React.FC = () => {
             }}
             className="flex-1 rounded-r-none"
           />
-          <Button onClick={handleAddTask} className="rounded-l-none">
+          <Button onClick={handleAddTask} className="rounded-l-none ml-2">   
             <Plus className="mr-2 h-4 w-4" /> Add Task
-          </Button>
+          </Button>                                   
         </div>
         <ul className="space-y-4">
           {tasks.map((task) => (
@@ -126,13 +149,14 @@ const TodoList: React.FC = () => {
               <div className="flex items-center space-x-2">
                 {editingTask.id === task.id ? (
                   <>
-                    <Button variant="ghost" size="icon" onClick={saveEditedTask}>
-                      <Check className="h-4 w-4" />
+                    <Button variant="ghost" size="icon" onClick={saveEditedTask} className="hover:bg-green-100">
+                      <Check className="h-4 w-4 hover:bg--400" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={cancelEditing}
+                      className="hover:bg-red-100"
                     >
                       <X className="h-4 w-4" />
                     </Button>

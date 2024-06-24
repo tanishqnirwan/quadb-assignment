@@ -1,6 +1,9 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+
+//type delaration
+
 interface Task {
   id: string;
   text: string;
@@ -15,12 +18,13 @@ const initialState: TodoState = {
   tasks: [],
 };
 
-// Load tasks from localStorage if available
+// load tasks from localStorage if they exist 
 const storedTasks = localStorage.getItem("tasks");
 if (storedTasks) {
   initialState.tasks = JSON.parse(storedTasks);
 }
 
+//redux slice to manage tasks
 const todoSlice = createSlice({
   name: 'todo',
   initialState,
@@ -56,3 +60,5 @@ const todoSlice = createSlice({
 
 export const { setTasks, addTask, toggleTaskCompletion, deleteTask, editTask } = todoSlice.actions;
 export default todoSlice.reducer;
+
+//exported all the actions and slice reducer
