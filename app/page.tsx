@@ -1,90 +1,65 @@
+
 "use client"
+
 
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Pencil, Trash2, Check, X } from "lucide-react";
-
-interface Task {
-  id: string;
-  text: string;
-  completed: boolean;
-}
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { addTask, deleteTask, editTask, setTasks, toggleTaskCompletion } from '@/lib/redux/todoSlice';
 
 const TodoList: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const dispatch = useAppDispatch();
+  const tasks = useAppSelector(state => state.todo.tasks);
   const [newTask, setNewTask] = useState<string>("");
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editingText, setEditingText] = useState<string>("");
+  const [editingTask, setEditingTask] = useState<{ id: string | null, text: string }>({ id: null, text: "" });
 
   useEffect(() => {
-    try {
-      const storedTasks = localStorage.getItem("tasks");
-      if (storedTasks) {
-        setTasks(JSON.parse(storedTasks));
-      }
-    } catch (error) {
-      console.error("Error loading tasks from localStorage:", error);
+    const storedTasks = localStorage.getItem("tasks");
+    if (storedTasks) {
+      dispatch(setTasks(JSON.parse(storedTasks)));
     }
-  }, []);
+  }, [dispatch]);
 
-  const saveTasksToLocalStorage = (updatedTasks: Task[]) => {
-    try {
-      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    } catch (error) {
-      console.error("Error saving tasks to localStorage:", error);
-    }
-  };
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
-  const addTask = () => {
+  const handleAddTask = () => {
     if (newTask.trim() !== "") {
-      const newTaskItem: Task = {
+      const newTaskItem = {
         id: Date.now().toString(),
         text: newTask,
         completed: false,
       };
-      const updatedTasks = [...tasks, newTaskItem];
-      setTasks(updatedTasks);
-      saveTasksToLocalStorage(updatedTasks);
+      dispatch(addTask(newTaskItem));
       setNewTask("");
     }
   };
 
-  const toggleTaskCompletion = (id: string) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedTasks);
-    saveTasksToLocalStorage(updatedTasks);
+  const handleToggleTaskCompletion = (id: string) => {
+    dispatch(toggleTaskCompletion(id));
   };
 
-  const deleteTask = (id: string) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
-    saveTasksToLocalStorage(updatedTasks);
+  const handleDeleteTask = (id: string) => {
+    dispatch(deleteTask(id));
   };
 
   const startEditing = (id: string, text: string) => {
-    setEditingId(id);
-    setEditingText(text);
+    setEditingTask({ id, text });
   };
 
   const saveEditedTask = () => {
-    if (editingId) {
-      const updatedTasks = tasks.map((task) =>
-        task.id === editingId ? { ...task, text: editingText } : task
-      );
-      setTasks(updatedTasks);
-      saveTasksToLocalStorage(updatedTasks);
-      setEditingId(null);
-      setEditingText("");
+    if (editingTask.id !== null) {
+      dispatch(editTask({ id: editingTask.id, text: editingTask.text }));
+      setEditingTask({ id: null, text: "" });
     }
   };
 
   const cancelEditing = () => {
-    setEditingId(null);
-    setEditingText("");
+    setEditingTask({ id: null, text: "" });
   };
 
   return (
@@ -101,12 +76,12 @@ const TodoList: React.FC = () => {
             onChange={(e) => setNewTask(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                addTask();
+                handleAddTask();
               }
             }}
             className="flex-1 rounded-r-none"
           />
-          <Button onClick={addTask} className="rounded-l-none">
+          <Button onClick={handleAddTask} className="rounded-l-none">
             <Plus className="mr-2 h-4 w-4" /> Add Task
           </Button>
         </div>
@@ -121,14 +96,14 @@ const TodoList: React.FC = () => {
               <div className="flex items-center flex-1">
                 <Checkbox
                   checked={task.completed}
-                  onCheckedChange={() => toggleTaskCompletion(task.id)}
+                  onCheckedChange={() => handleToggleTaskCompletion(task.id)}
                   className="mr-4"
                 />
-                {editingId === task.id ? (
+                {editingTask.id === task.id ? (
                   <Input
                     type="text"
-                    value={editingText}
-                    onChange={(e) => setEditingText(e.target.value)}
+                    value={editingTask.text}
+                    onChange={(e) => setEditingTask({ ...editingTask, text: e.target.value })}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         saveEditedTask();
@@ -149,7 +124,7 @@ const TodoList: React.FC = () => {
                 )}
               </div>
               <div className="flex items-center space-x-2">
-                {editingId === task.id ? (
+                {editingTask.id === task.id ? (
                   <>
                     <Button variant="ghost" size="icon" onClick={saveEditedTask}>
                       <Check className="h-4 w-4" />
@@ -174,7 +149,7 @@ const TodoList: React.FC = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => deleteTask(task.id)}
+                      onClick={() => handleDeleteTask(task.id)}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
